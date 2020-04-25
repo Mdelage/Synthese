@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Disks</title>
+
+    {% load static %}
+    <link href="{% static 'blog/bootstra.min.css' %}" rel="stylesheet" type="text/css" />
+</head>
+<body>
+    <h1>Albums</h1>
+
+    <!-- Liste des albums -->
+    <div class="col-4">
+        {% for album in all_albums %}
+            <div>
+                {% if album.id == id_album %}
+                <a class="list-group-item list-group-item-action active" href="{% url 'album' album.id %}">{{ album }}</a>
+                {% else %}
+                 <a class="list-group-item list-group-item-action" href="{% url 'album' album.id %}">{{ album }}</a>
+                {% endif %}
+            </div>
+        {% empty %}
+        {% endfor %}
+    </div>
+
+    <!-- Détails d'un album -->
+    <div class="col-8">
+        <h2>{{ current_album }}</h2>
+        <p>Artiste: {{artist}} </p> <br/>
+        <p>Pistes</p>
+
+        <table>
+            <tr>
+                <th>Nom</th>
+                <th>Compositeur</th>
+                <th>Durée</th>
+                <th>Prix unitaire</th>
+                <th>Taille</th>
+            </tr>
+            {% for track in tracks %}
+            <tr>
+                <th>{{ track.name }}</th>
+                <th>
+                    {% if track.composer %}}
+                        {{ track.composer }}
+                    {% else %}
+                    {% endif %}
+                </th>
+                <th>{{ track.milliseconds }}</th>
+                <th>{{ track.unitPrice }} €</th>
+                <th>{{ track.bytes }} Mo</th>
+            </tr>
+            {% empty %}
+            {% endfor %}
+        </table>
+
+
+    </div>
+</body>
+</html>
